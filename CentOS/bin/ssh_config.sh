@@ -9,24 +9,24 @@ if [ ! -f /etc/ssh/sshd_config.orig ]; then
   cp /etc/ssh/sshd_config /etc/ssh/sshd_config.orig
 fi
 #
-rm -f /tmp/ewt_sshdA.tmp
-rm -f /tmp/ewt_sshdB.tmp
+rm -f /tmp/sshd_configA.tmp
+rm -f /tmp/sshd_configB.tmp
 # Remove specific configuration entries from sshd config
 # and add our own configured entries
-grep -v "AllowGroups" /etc/ssh/sshd_config > /tmp/ewt_sshdA.tmp
-grep -v "PermitRootLogin" /tmp/ewt_sshdA.tmp > /tmp/ewt_sshdB.tmp
-grep -v "PubkeyAuthentication" /tmp/ewt_sshdB.tmp > /tmp/ewt_sshdA.tmp
-grep -v "PasswordAuthentication" /tmp/ewt_sshdA.tmp > /tmp/ewt_sshdB.tmp
-grep -v "ChallengeResponseAuthentication" /tmp/ewt_sshdB.tmp > /tmp/ewt_sshdA.tmp
-grep -v "GSSAPIAuthentication" /tmp/ewt_sshdA.tmp > /tmp/ewt_sshdB.tmp
-grep -v "UseDNS" /tmp/ewt_sshdB.tmp > /tmp/ewt_sshdA.tmp
+grep -v "AllowGroups" /etc/ssh/sshd_config > /tmp/sshd_configA.tmp
+grep -v "PermitRootLogin" /tmp/sshd_configA.tmp > /tmp/sshd_configB.tmp
+grep -v "PubkeyAuthentication" /tmp/sshd_configB.tmp > /tmp/sshd_configA.tmp
+grep -v "PasswordAuthentication" /tmp/sshd_configA.tmp > /tmp/sshd_configB.tmp
+grep -v "ChallengeResponseAuthentication" /tmp/sshd_configB.tmp > /tmp/sshd_configA.tmp
+grep -v "GSSAPIAuthentication" /tmp/sshd_configA.tmp > /tmp/sshd_configB.tmp
+grep -v "UseDNS" /tmp/sshd_configB.tmp > /tmp/sshd_configA.tmp
 #
 # Put our config at the bottom
-cat /root/config/etc/ssh/sshd_config >> /tmp/ewt_sshdA.tmp
+cat ../etc/ssh/sshd_config >> /tmp/sshd_configA.tmp
 # move current config to safe spot
 TDAY=`date "+%Y%m%d-%s"`
 mv -f /etc/ssh/sshd_config /etc/ssh/sshd_config.$TDAY
-mv -f /tmp/ewt_sshdA.tmp /etc/ssh/sshd_config
+mv -f /tmp/sshd_configA.tmp /etc/ssh/sshd_config
 # restart
 systemctl restart sshd
 systemctl status sshd --no-pager
