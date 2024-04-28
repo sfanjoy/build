@@ -1,4 +1,10 @@
 #!/bin/bash
+# Check of config file 1st
+if [ ! -f /root/config/etc/ssh/sshd_config ]; then
+  echo "No sshd_config file in root config."
+  exit
+fi
+
 if [ `getent group ssh-uzer` ]; then
   echo "Group ssh-uzer already exists. Good..."
 else
@@ -22,7 +28,7 @@ grep -v "GSSAPIAuthentication" /tmp/sshd_configA.tmp > /tmp/sshd_configB.tmp
 grep -v "UseDNS" /tmp/sshd_configB.tmp > /tmp/sshd_configA.tmp
 #
 # Put our config at the bottom
-cat ../etc/ssh/sshd_config >> /tmp/sshd_configA.tmp
+cat /root/config/etc/ssh/sshd_config >> /tmp/sshd_configA.tmp
 # move current config to safe spot
 TDAY=`date "+%Y%m%d-%s"`
 mv -f /etc/ssh/sshd_config /etc/ssh/sshd_config.$TDAY

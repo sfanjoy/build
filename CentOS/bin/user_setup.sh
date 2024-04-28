@@ -1,32 +1,60 @@
 #!/bin/bash
+# add EWT main application user
+# Add the EWT user group for ssh access
+if [ -z "$2" ]; then
+        echo "Usage: user_setup.sh <username>";
+        echo ""
+        exit
+fi
+#
 if [ `getent group ssh-uzer` ]; then
   echo "Group ssh-uzer already exists...Good"
 else
   /usr/sbin/groupadd ssh-uzer
 fi
 #
-uinfo=`getent passwd sfanjoy`
+uinfo=`getent passwd $1`
 #
 if [[ ${#uinfo} -gt 0 ]]; then
-  echo "User sfanjoy already exists...Good"
+  echo "User $1 already exists...Good"
 else
-  echo "Adding User sfanjoy..."
-  /usr/sbin/useradd -s /bin/bash sfanjoy
-  echo "Setting sfanjoy password..."
-  passwd sfanjoy
-  /usr/sbin/usermod -a -G ssh-uzer sfanjoy
+  echo "Adding User $1..."
+  /usr/sbin/useradd -s /bin/bash $1
+  echo "Setting $1 password..."
+  passwd $1
+  /usr/sbin/usermod -a -G ssh-uzer $1
 fi
-mkdir -p /home/sfanjoy/bin
-mkdir -p /home/sfanjoy/rpms
-cp ../home/sfanjoy/vimrc /home/sfanjoy/.vimrc
-cp ../home/sfanjoy/bashrc /home/sfanjoy/.bashrc
-echo "Installing keys for User sfanjoy..."
-mkdir -p -m 700 /home/sfanjoy/.ssh
-cp ../home/sfanjoy/id_ed25519.pub /home/sfanjoy/.ssh/authorized_keys
-chmod 700 /home/sfanjoy/.ssh
-chmod 600 /home/sfanjoy/.ssh/*
-chmod 711 /home/sfanjoy/.ssh/authorized_keys
-chown -R sfanjoy:sfanjoy /home/sfanjoy/.ssh
-echo "User sfanjoy keys installed"
+#
+mkdir -p /home/$1/bin
+mkdir -p /home/$1/rpms
+chown -R $1:$1 /home/$1
+if [ -f /root/config/home/$1/bin ]; then
+    cp -r /root/config/home/$1/bin /home/$1
+fi
+if [ -f /root/config/home/$1/bashrc ]; then
+  cp /root/config/home/$1/bashrc /home/$1/.bashrc
+fi
+if [ -f /root/config/home/$1/vimrc ]; then
+  cp /root/config/home/$1/vimrc /home/$1/.vimrc
+fi
+if [ -f /root/config/home/$1/config ]; then
+  cp -r /root/config/home/$1/config /home/$1
+fi
+chmod 644 /home/$1/.bashrc
+chmod 644 /home/$1/.vimrc
+#
+# Only the user should see their configs and shells
+# .ssh/ is sensitive to outside view/ownership
+chown -R $1:$1 /home/$2/.*
+chown -R $1:$1 /home/$2/bin
+if [ -f /root/config/home/$1/authorized_keys ]; then
+  echo "Installing keys for User sfanjoy..."
+  mkdir -p -m 700 /home/$1/.ssh
+  cp /root/config/home/$1/authorized_keys /home/$1/.ssh
+  chmod 700 /home/sfanjoy/.ssh
+  chmod 600 /home/sfanjoy/.ssh/*
+  chmod 711 /home/sfanjoy/.ssh/authorized_keys
+  chown -R $1:$1 /home/sfanjoy/.ssh
+fi
 chown -R sfanjoy:sfanjoy /home/sfanjoy
-echo "User sfanjoy Configured"
+echo "User $1 Configured"
