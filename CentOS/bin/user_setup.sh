@@ -45,16 +45,16 @@ chmod 644 /home/$1/.vimrc
 #
 # Only the user should see their configs and shells
 # .ssh/ is sensitive to outside view/ownership
-chown -R $1:$1 /home/$2/.*
-chown -R $1:$1 /home/$2/bin
+chown -R $1:$1 /home/$1/.*
+chown -R $1:$1 /home/$1/bin
 if [ -f /root/config/home/$1/authorized_keys ]; then
   echo "Installing keys for User sfanjoy..."
   mkdir -p -m 700 /home/$1/.ssh
   cp /root/config/home/$1/authorized_keys /home/$1/.ssh
-  chmod 700 /home/sfanjoy/.ssh
-  chmod 600 /home/sfanjoy/.ssh/*
-  chmod 711 /home/sfanjoy/.ssh/authorized_keys
-  chown -R $1:$1 /home/sfanjoy/.ssh
+  chmod 700 /home/$1/.ssh
+  chmod 600 /home/$1/.ssh/*
+  chmod 711 /home/$1/.ssh/authorized_keys
+  chown -R $1:$1 /home/$1/.ssh
 fi
-chown -R sfanjoy:sfanjoy /home/sfanjoy
+chown -R $1:$1 /home/$1
 echo "User $1 Configured"

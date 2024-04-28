@@ -55,7 +55,7 @@ elif [ $1 == "help" ]; then
   echo "firewall-cmd --runtime-to-permanent"
   echo "firewall-cmd --reload"
   echo "systemctl status firewalld"
-elif [ $1 == "show" ]
+elif [ $1 == "show" ]; then
   echo ""
   echo ""
   echo "Current Firewall Zones"
