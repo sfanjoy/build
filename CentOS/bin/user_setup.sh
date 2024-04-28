@@ -1,7 +1,7 @@
 #!/bin/bash
 # add EWT main application user
 # Add the EWT user group for ssh access
-if [ -z "$2" ]; then
+if [ -z "$1" ]; then
         echo "Usage: user_setup.sh <username>";
         echo ""
         exit

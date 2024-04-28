@@ -13,6 +13,9 @@ if [ -z "$1" ]; then
         echo "    firewall.sh add-ip <ip>"
         echo "      * Give <ip> access to machine"
         echo ""
+        echo "    firewall.sh show"
+        echo "      * Show the firewall"
+        echo ""
         echo "    firewall.sh reset"
         echo "      * Resets the firewall to no access"
         echo ""
@@ -40,7 +43,7 @@ if [ $1 == "reset" ]; then
   firewall-cmd --zone=work --add-service=ssh --permanent
   firewall-cmd --runtime-to-permanent
   firewall-cmd --reload
-if [ $1 == "add-ip" ]; then
+elif [ $1 == "add-ip" ]; then
   firewall-cmd --zone=work --add-source=$2 --permanent
   firewall-cmd --runtime-to-permanent
   firewall-cmd --reload
@@ -51,14 +54,13 @@ elif [ $1 == "help" ]; then
   echo "firewall-cmd --zone=work --add-port=7702-8999/udp --permanent"
   echo "firewall-cmd --runtime-to-permanent"
   echo "firewall-cmd --reload"
-else
-  echo "Unknown command"
+  echo "systemctl status firewalld"
+elif [ $1 == "show" ]
+  echo ""
+  echo ""
+  echo "Current Firewall Zones"
+  echo ""
+  echo ""
+  firewall-cmd --list-all-zones --permanent
+  systemctl status firewalld
 fi
-echo ""
-echo ""
-echo "Current Firewall Zones"
-echo ""
-echo ""
-firewall-cmd --list-all-zones --permanent
-systemctl restart firewalld
-systemctl status firewalld
