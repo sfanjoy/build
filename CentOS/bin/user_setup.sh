@@ -36,6 +36,7 @@ if [ -f /root/config/home/$1/bashrc ]; then
 fi
 if [ -f /root/config/home/$1/vimrc ]; then
   cp /root/config/home/$1/vimrc /home/$1/.vimrc
+  cp /root/config/home/$1/vimrc /root/.vimrc
 fi
 if [ -f /root/config/home/$1/config ]; then
   cp -r /root/config/home/$1/config /home/$1
