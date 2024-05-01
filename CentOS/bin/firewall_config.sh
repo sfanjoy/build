@@ -41,6 +41,7 @@ if [ $1 == "reset" ]; then
       done
   done
   firewall-cmd --zone=work --add-service=ssh --permanent
+  firewall-cmd --zone=public --set-target=DROP --permanent
   firewall-cmd --runtime-to-permanent
   firewall-cmd --reload
 elif [ $1 == "add-ip" ]; then
