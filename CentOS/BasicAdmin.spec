@@ -2,7 +2,7 @@
 # Macros
 #
 %define APP_NAME        BasicAdmin
-%define APP_VERSION     01
+%define APP_VERSION     02
 %define BRANCH_NAME     build/CentOS
 #
 # Pre-amble
