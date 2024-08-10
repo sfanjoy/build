@@ -27,7 +27,6 @@ fi
 #
 mkdir -p /home/$1/bin
 mkdir -p /home/$1/rpms
-chown -R $1:$1 /home/$1
 if [ -f /root/config/home/$1/bin ]; then
     cp -r /root/config/home/$1/bin /home/$1
 fi
@@ -46,8 +45,6 @@ chmod 644 /home/$1/.vimrc
 #
 # Only the user should see their configs and shells
 # .ssh/ is sensitive to outside view/ownership
-chown -R $1:$1 /home/$1/.*
-chown -R $1:$1 /home/$1/bin
 if [ -f /root/config/home/$1/authorized_keys ]; then
   echo "Installing keys for User sfanjoy..."
   mkdir -p -m 700 /home/$1/.ssh
