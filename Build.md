@@ -1,3 +1,4 @@
+ - *** Build Notes
  - Install latest OS version
  - ssh root@<new host>
  - passwd
