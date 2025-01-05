@@ -7,8 +7,8 @@
  - git clone https://github.com/sfanjoy/build.git
  - cd build/<os name>; ./install.sh; cd; cd bin
  - ./sshd_config.sh
- - ./user_config.sh sfanjoy
- - ./user_config.sh jobber
+ - ./user_setup.sh sfanjoy
+ - ./user_setup.sh jobber
  - ./firewall.sh reset
  - ./firewall.sh add-ip <ssh/putty host>
  - test connection and drop of console use putty/ssh
